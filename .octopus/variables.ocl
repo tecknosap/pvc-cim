@@ -1,106 +1,47 @@
-variable "ApimTemplatesPackageId" {
-    value "#{ProductName}-apim-templates" {}
-}
-
-variable "AppConfigName" {
-    value "inxn-shared-app-config" {}
-}
-
-variable "CommaSeparatedAppConfigKeys" {
-    value "" {}
-}
-
-variable "CommaSeparatedDisabledFunctions" {
-    value {}
-}
-
-variable "CommaSeparatedKeyValueTags" {
-    value {}
-}
-
-variable "ComponentDependencies" {
-    value "['ArmSharedInfrastructure','Service - CustomerAuthorisation','Service - Login']" {}
-}
-
-variable "CosmosName" {
-    value {}
-}
-
-variable "CosmosResourceGroupName" {
-    value "#{InxnPrefix}-#{AzureEnvironmentName}-#{CosmosName}" {}
-}
-
-variable "DotNetRuntimeVersion" {
-    value "8" {}
-}
-
-variable "FunctionAppName" {
-    value "#{InxnPrefix}-#{AzureEnvironmentName}-#{ProductName}-func" {}
-
-    value "#{dlrPrefix}-#{AzureEnvironmentName}-#{ProductName}-func" {
-        description = ""
-        environment = ["a1", "d51", "d52", "d54", "d55", "d56", "d57", "d58", "d59", "dev-d1", "production"]
-    }
-}
-
-variable "FunctionAppResourceGroup" {
-    value "#{InxnPrefix}-#{AzureEnvironmentName}-#{ProductName}" {}
-
-    value "#{dlrPrefix}-#{AzureEnvironmentName}-#{ProductName}" {
-        description = ""
-        environment = ["a1", "d51", "d52", "d54", "d55", "d56", "d57", "d58", "d59", "dev-d1", "production"]
-    }
-}
-
-variable "FunctionRuntime" {
-    value "dotnet-isolated" {}
-}
-
-variable "FunctionsRuntimeVersion" {
-    value "4" {}
-}
-
-variable "NetFrameworkVersion" {
-    value "v8.0" {}
+variable "ProductName" {
+  value "seed" {}
 }
 
 variable "PackageId" {
-    value "SeedFunction" {}
+  value "SeedFunction" {}
 }
 
-variable "ProductName" {
-    value "seed" {}
+variable "FunctionAppName" {
+  value "#{InxnPrefix}-#{AzureEnvironmentName}-#{ProductName}-func" {}
 }
 
-variable "ServiceBusSubscriptionName" {
-    value {}
+variable "FunctionAppResourceGroup" {
+  value "#{InxnPrefix}-#{AzureEnvironmentName}-#{ProductName}" {}
 }
 
-variable "ServiceBusSubscriptionTopicNames" {
-    value {}
+variable "AzureResourceLocation" {
+  value "uksouth" {}
 }
 
-variable "ServiceBusTopicNames" {
-    value {}
+variable "FunctionRuntime" {
+  value "dotnet-isolated" {}
+}
+
+variable "DotNetRuntimeVersion" {
+  value "8" {}
+}
+
+variable "AppServicePlanSku" {
+  value "Y1" {}
 }
 
 variable "StorageAccountName" {
-    value "seedfunc#{AzureEnvironmentName}" {}
-
-    value "seedfunc" {
-        description = ""
-    }
-
-    value "inxn#{AzureEnvironmentName}seedfuncsa" {
-        environment = ["dummy"]
-    }
-
-    value "#{dlrPrefix}#{AzureEnvironmentName}seedfuncsa" {
-        description = ""
-        environment = ["a1", "d51", "d52", "d54", "d55", "d56", "d57", "d58", "d59", "dev-d1", "production"]
-    }
+  value "seedfunc#{AzureEnvironmentName}" {}
 }
 
-variable "StorageDnsEndpointType" {
-    value "standard" {}
+variable "AzureClientId" {
+  value "" {}
+}
+
+variable "AzureClientSecret" {
+  value "" {}
+}
+
+variable "AzureTenantId" {
+  value "" {}
 }
