@@ -1,0 +1,18 @@
+project {
+  name = "demo"
+  description = "Azure Function App deployment template"
+
+  project_group = "FunctionApp"
+  lifecycle     = "Standard Promotion"
+
+  included_variable_sets = [
+    "Azure Resources",
+    "Azure SQL Server Resources",
+    "Certificates",
+    "Database Server"
+  ]
+}
+
+
+
+
