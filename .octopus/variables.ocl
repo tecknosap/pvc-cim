@@ -1,47 +1,28 @@
-variable "ProductName" {
-  value "seed" {}
-}
+variables {
+  variable "EnvironmentName" {
+    type  = "String"
+    value = "Dev"
 
-variable "PackageId" {
-  value "SeedFunction" {}
-}
+    scope = {
+      environments = [
+        "Environments-1", # match your environment IDs
+      ]
+    }
+  }
 
-variable "FunctionAppName" {
-  value "#{InxnPrefix}-#{AzureEnvironmentName}-#{ProductName}-func" {}
-}
+  variable "App.BaseUrl" {
+    type  = "String"
+    value = "https://example.local"
 
-variable "FunctionAppResourceGroup" {
-  value "#{InxnPrefix}-#{AzureEnvironmentName}-#{ProductName}" {}
-}
+    scope = {
+      environments = [
+        "Environments-1",
+      ]
+    }
+  }
 
-variable "AzureResourceLocation" {
-  value "uksouth" {}
-}
-
-variable "FunctionRuntime" {
-  value "dotnet-isolated" {}
-}
-
-variable "DotNetRuntimeVersion" {
-  value "8" {}
-}
-
-variable "AppServicePlanSku" {
-  value "Y1" {}
-}
-
-variable "StorageAccountName" {
-  value "seedfunc#{AzureEnvironmentName}" {}
-}
-
-variable "AzureClientId" {
-  value "" {}
-}
-
-variable "AzureClientSecret" {
-  value "" {}
-}
-
-variable "AzureTenantId" {
-  value "" {}
+  variable "App.ApiKey" {
+    type  = "Sensitive"
+    value = "PLEASE-OVERRIDE-IN-UI-OR-LIBRARY-SET"
+  }
 }

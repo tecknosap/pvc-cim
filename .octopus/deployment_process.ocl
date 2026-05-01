@@ -1,34 +1,46 @@
-step "deploy-function" {
-  name = "Deploy Function App"
+deploymentProcess {
+  schemaVersion = 2
 
-  action {
-    action_type = "Octopus.Script"
+  step "Run application deployment script" {
+    condition           = "Success"
+    startTrigger        = "StartAfterPrevious"
+    packageRequirement  = "LetOctopusDecide"
+    properties          = {}
 
-    packages {
-      package {
-        name = "app-package"
-        package_id = "#{PackageId}"
-        acquisition_location = "Server"
+    actions {
+      action "Run PowerShell script" {
+        actionType = "Octopus.Script"
+
+        condition          = "Success"
+        isDisabled         = false
+        isRequired         = true
+        name               = "Run PowerShell script"
+        notes              = ""
+        runOnServer        = false
+        workerPoolVariable = ""
+        workerPoolId       = ""
+
+        environments = [
+          "Environments-1", # replace with real environment IDs or remove to use all
+        ]
+
+        roles = [
+          "web-server",     # replace with your target role(s)
+        ]
+
+        properties = {
+          "Octopus.Action.Script.ScriptSource" = "Inline"
+          "Octopus.Action.Script.Syntax"       = "PowerShell"
+          "Octopus.Action.Script.ScriptBody"   = <<SCRIPT
+Write-Host "Starting deployment..."
+# TODO: add your real deployment logic here
+Write-Host "Deployment completed successfully."
+SCRIPT
+        }
+
+        packages = []
+        features = []
       }
     }
-
-    properties = {
-      "Octopus.Action.Script.Syntax" = "PowerShell"
-      "Octopus.Action.Script.ScriptBody" = <<-EOT
-        az login --service-principal `
-          -u #{AzureClientId} `
-          -p #{AzureClientSecret} `
-          --tenant #{AzureTenantId}
-
-        $zipPath = "#{Octopus.Action.Package[app-package].ExtractedPath}\\app.zip"
-
-        az functionapp deployment source config-zip `
-          --name #{FunctionAppName} `
-          --resource-group #{FunctionAppResourceGroup} `
-          --src $zipPath
-      EOT
-    }
-
-    worker_pool = "function-app-pool"
   }
 }
