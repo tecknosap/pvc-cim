@@ -1,28 +1,64 @@
 variables {
+
   variable "EnvironmentName" {
-    type  = "String"
-    value = "Dev"
+    type = "String"
+
+    value = "dev"
 
     scope = {
-      environments = [
-        "Environments-1", # match your environment IDs
-      ]
+      environments = ["devs"]
+    }
+  }
+
+  variable "EnvironmentName" {
+    type = "String"
+
+    value = "qa"
+
+    scope = {
+      environments = ["qas"]
+    }
+  }
+
+  variable "EnvironmentName" {
+    type = "String"
+
+    value = "prod"
+
+    scope = {
+      environments = ["prods"]
     }
   }
 
   variable "App.BaseUrl" {
-    type  = "String"
-    value = "https://example.local"
+    type = "String"
 
+    value = "https://dev.example.local"
     scope = {
-      environments = [
-        "Environments-1",
-      ]
+      environments = ["devs"]
+    }
+  }
+
+  variable "App.BaseUrl" {
+    type = "String"
+
+    value = "https://qa.example.local"
+    scope = {
+      environments = ["qas"]
+    }
+  }
+
+  variable "App.BaseUrl" {
+    type = "String"
+
+    value = "https://prod.example.local"
+    scope = {
+      environments = ["prods"]
     }
   }
 
   variable "App.ApiKey" {
     type  = "Sensitive"
-    value = "PLEASE-OVERRIDE-IN-UI-OR-LIBRARY-SET"
+    value = "PLEASE-SET-IN-UI"
   }
 }

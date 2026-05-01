@@ -1,31 +1,31 @@
 deploymentProcess {
   schemaVersion = 2
 
-  step "Run application deployment script" {
-    condition           = "Success"
-    startTrigger        = "StartAfterPrevious"
-    packageRequirement  = "LetOctopusDecide"
-    properties          = {}
+  step "Run Deployment Script" {
+    condition          = "Success"
+    startTrigger       = "StartAfterPrevious"
+    packageRequirement = "LetOctopusDecide"
+    properties         = {}
 
     actions {
-      action "Run PowerShell script" {
-        actionType = "Octopus.Script"
-
+      action "Run PowerShell" {
+        name               = "Run PowerShell"
+        actionType         = "Octopus.Script"
         condition          = "Success"
         isDisabled         = false
         isRequired         = true
-        name               = "Run PowerShell script"
-        notes              = ""
         runOnServer        = false
-        workerPoolVariable = ""
         workerPoolId       = ""
+        workerPoolVariable = ""
 
         environments = [
-          "Environments-1", # replace with real environment IDs or remove to use all
+          "devs",
+          "qas",
+          "prods",
         ]
 
         roles = [
-          "web-server",     # replace with your target role(s)
+          "app-server",   # replace with your real target role
         ]
 
         properties = {
@@ -33,7 +33,8 @@ deploymentProcess {
           "Octopus.Action.Script.Syntax"       = "PowerShell"
           "Octopus.Action.Script.ScriptBody"   = <<SCRIPT
 Write-Host "Starting deployment..."
-# TODO: add your real deployment logic here
+Write-Host "Environment: #{EnvironmentName}"
+Write-Host "Base URL: #{App.BaseUrl}"
 Write-Host "Deployment completed successfully."
 SCRIPT
         }
