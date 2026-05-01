@@ -1,46 +1,27 @@
 deploymentProcess {
   schemaVersion = 2
 
-  step "Run Deployment Script" {
-    condition          = "Success"
-    startTrigger       = "StartAfterPrevious"
-    packageRequirement = "LetOctopusDecide"
-    properties         = {}
+  steps {
+    step "Run Deployment Script" {
+      condition          = "Success"
+      startTrigger       = "StartAfterPrevious"
+      packageRequirement = "LetOctopusDecide"
 
-    actions {
-      action "Run PowerShell" {
-        name               = "Run PowerShell"
-        actionType         = "Octopus.Script"
-        condition          = "Success"
-        isDisabled         = false
-        isRequired         = true
-        runOnServer        = false
-        workerPoolId       = ""
-        workerPoolVariable = ""
+      actions {
+        action "Run PowerShell" {
+          actionType = "Octopus.Script"
 
-        environments = [
-          "devs",
-          "qas",
-          "prods",
-        ]
-
-        roles = [
-          "app-server",   # replace with your real target role
-        ]
-
-        properties = {
-          "Octopus.Action.Script.ScriptSource" = "Inline"
-          "Octopus.Action.Script.Syntax"       = "PowerShell"
-          "Octopus.Action.Script.ScriptBody"   = <<SCRIPT
-Write-Host "Starting deployment..."
-Write-Host "Environment: #{EnvironmentName}"
-Write-Host "Base URL: #{App.BaseUrl}"
-Write-Host "Deployment completed successfully."
+          properties = {
+            "Octopus.Action.Script.ScriptSource" = "Inline"
+            "Octopus.Action.Script.Syntax"       = "PowerShell"
+            "Octopus.Action.Script.ScriptBody"   = <<SCRIPT
+Write-Host "Hello from deployment"
 SCRIPT
-        }
+          }
 
-        packages = []
-        features = []
+          environments = ["devs", "qas", "prods"]
+          roles        = ["app-server"]
+        }
       }
     }
   }
